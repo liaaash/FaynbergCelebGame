@@ -108,7 +108,6 @@ public class StartPanel extends JPanel implements ActionListener {
     answerField = new JTextField("Type celebrity here (4 letters min)");
     clueField = new JTextField("Enter celebrity clue here (10 letters min)");
     addCelebrityButton = new JButton("Add current celebrity");
-    addCelebrityButton.addEventHandler();
     startButton = new JButton("Start Celebrity game");
     celebrityCount = 0;
     countLabelText = "Current Celebrity Count: " + celebrityCount;
@@ -177,7 +176,7 @@ public class StartPanel extends JPanel implements ActionListener {
    */
   private void setupListeners() {
     addCelebrityButton.addActionListener(this);
-
+    startButton.addActionListener(this);
   }
 
 
@@ -223,16 +222,25 @@ public class StartPanel extends JPanel implements ActionListener {
   }
 
   public void actionPerformed (ActionEvent ae) {
-    // when "add celebrity" button gets clicked:
-    answerField.setBackground(Color.WHITE);
-    clueField.setBackground(Color.WHITE);
-    if (validate(answerField.getText(), clueField.getText())) {
-      addToGame();
-    } else {
-      invalidInput();
+    Object source = ae.getSource();
+    JButton b = (JButton) source;
+    String t = b.getText();
+    if (t.equals("Add current celebrity")) {
+      answerField.setBackground(Color.WHITE);
+      clueField.setBackground(Color.WHITE);
+      if (validate(answerField.getText(), clueField.getText())) {
+        addToGame();
+      } else {
+        invalidInput();
+      }
+      celebrityCount = controller.getCelebrityGameSize();
+      celebrityCountLabel.setText(countLabelText + celebrityCount);
+    } else if (t.equals("Start Celebrity game")) {
+      controller.play();
     }
-    celebrityCount = controller.getCelebrityGameSize();
-    celebrityCountLabel.setText(countLabelText + celebrityCount);
+
+
+
 
   }
 }
