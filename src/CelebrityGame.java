@@ -42,9 +42,9 @@ public class CelebrityGame {
 	public boolean processGuess(String guess) {
 		String guess1 = guess.trim().toLowerCase();
 		if (guess1.equals(gameCelebrity.getAnswer().toLowerCase())) {
-			celebGameList.remove(0);
 			if (getCelebrityGameSize()>0) {
 				gameCelebrity = celebGameList.get(0);
+				celebGameList.remove(0);
 			} else {
 				gameCelebrity = new Celebrity("", "");
 			}
