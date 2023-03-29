@@ -207,14 +207,22 @@ public class CelebrityPanel extends JPanel implements ActionListener {
    * to provide the same functionality.
    */
   private void updateScreen() {
-    clueArea.append("\nYou guessed: " + guessField.getText() + "\n");
-    if (controller.processGuess(guessField.getText())) {
-      System.out.println("CORRECT");
+    String text = guessField.getText();
+    clueArea.append("\nYou guessed: " + text + "\n");
+    if (controller.processGuess(text)) {
+      clueArea.setBackground(Color.CYAN);
+      clueArea.append(success);
+      clueArea.append(controller.sendClue());
     } else {
-      System.out.println("INCORRECT");
+      clueArea.setBackground(Color.WHITE);
+      clueArea.append(tryAgain);
+      clueArea.append(controller.sendClue());
     }
-
-
+    if (controller.getCelebrityGameSize() == 0) {
+      clueArea.append("\n no more celebs to guess.");
+      guessButton.setEnabled(false);
+      guessField.setEnabled(false);
+    }
   }
 
   public void actionPerformed(ActionEvent ae) {
